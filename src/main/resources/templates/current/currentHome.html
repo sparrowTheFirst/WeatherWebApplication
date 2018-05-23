@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="navi :: head">
+    <meta charset="UTF-8"/>
+    <title>home</title>
+</head>
+<body>
+
+    <div th:include="navi :: menu"></div>
+
+    <div class="result">
+        <div class="container rounded bg-light">
+
+            <div class="row">
+                <div class="col-sm">
+                    <p>City, Country:</p>
+                </div>
+                <div class="col-sm">
+                    <div>
+                        <p th:text="${name}"></p>,<p th:text="${country}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <p>Date of weather measure:</p>
+                </div>
+                <div class="col-sm">
+                    <p th:text="${date}"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <p>Geolocation:</p>
+                </div>
+                <div class="col-sm">
+                    <p th:text="${geoLocation}"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <p>Time of sunrise:</p>
+                </div>
+                <div class="col-sm">
+                    <p th:text="${dateOfSunrise}"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <p>Time of sunset:</p>
+                </div>
+                <div class="col-sm">
+                    <p th:text="${dateOfSunset}"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <p>Temperature:</p>
+                </div>
+                <div class="col-sm">
+                    <div>
+                        <p th:text="${temp}"></p><p>*C</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <p>Sensed temperature:</p>
+                </div>
+                <div class="col-sm">
+                    <div>
+                        <p th:text="${windchill}"></p><p>*C</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <p>Pressure:</p>
+                </div>
+                <div class="col-sm">
+                    <div>
+                        <p th:text="${pressure}"></p><p>hPa</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <p>Wind speed, wind direction:</p>
+                </div>
+                <div class="col-sm">
+                    <div>
+                        <p th:text="${speed}"></p><p>m/s</p>,<p th:text="${direction}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <p>Humidity:</p>
+                </div>
+                <div class="col-sm">
+                    <div>
+                        <p th:text="${humidity}"></p><p>%</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <p>Description:</p>
+                </div>
+                <div class="col-sm">
+                    <ul id="descList" th:each="desc : ${description}">
+                        <li th:text="${desc}"></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

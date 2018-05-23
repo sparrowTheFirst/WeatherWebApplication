@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="navi :: head">
+    <meta charset="UTF-8"/>
+    <title>Search</title>
+</head>
+
+<body>
+
+    <div th:include="navi :: menu"></div>
+
+    <div id="search">
+        <nav class="navbar navbar-light bg-light ">
+            <div>
+                <p><h1>Find current weather:</h1></p>
+            </div>
+            <div>
+                <form class="form-inline" th:action="@{/current/search}" method="post" th:object="${weatherInCity}">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Name of city" aria-label="Search" th:field="*{nameOfCity}" />
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+    </div>
+
+</body>
+</html>

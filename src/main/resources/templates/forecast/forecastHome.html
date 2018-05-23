@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="navi :: head">
+    <meta charset="UTF-8"/>
+    <title>home</title>
+
+</head>
+<body>
+
+    <div th:include="navi :: menu"></div>
+
+    <div class="result">
+        <div class="container rounded bg-light">
+
+            <div class="row">
+                <div class="col-sm">
+                    <p>City, Country:</p>
+                </div>
+                <div class="col-sm">
+                    <div>
+                        <p th:text="${name}"></p>,<p th:text="${country}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <p>Geolocation:</p>
+                </div>
+                <div class="col-sm">
+                    <p th:text="${geoLocation}"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <p>Temperature:</p>
+                </div>
+                <canvas id="tempList"></canvas>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <p>Sensed temperature:</p>
+                </div>
+                <canvas id="windchillList"></canvas>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <p>Pressure:</p>
+                </div>
+                <canvas id="pressureList"></canvas>
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <p>Humidity:</p>
+                </div>
+                <canvas id="humidityList"></canvas>
+            </div>
+
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        var ctx = document.getElementById("tempList");
+        var tempList = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [[${date}]],
+            datasets: [{
+                label: '*C',
+                data: [[${tempList}]],
+                backgroundColor:
+                    'rgba(255, 99, 132, 0.2)',
+
+                borderColor:
+                    'rgba(255,99,132,1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+    </script>
+
+    <script th:inline="javascript">
+        var ctx = document.getElementById("windchillList");
+        var windchillList = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [[${date}]],
+            datasets: [{
+                label: '*C',
+                data: [[${windchillList}]],
+                backgroundColor:
+                    'rgba(255, 159, 64, 0.2)',
+
+                borderColor:
+                    'rgba(255, 159, 64, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+    </script>
+
+    <script th:inline="javascript">
+        var ctx = document.getElementById("pressureList");
+        var pressureList = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [[${date}]],
+            datasets: [{
+                label: 'hPa',
+                data: [[${pressureList}]],
+                backgroundColor:
+                    'rgba(75, 192, 192, 0.2)',
+
+                borderColor:
+                    'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+    </script>
+
+    <script th:inline="javascript">
+        var ctx = document.getElementById("humidityList");
+        var humidityList = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [[${date}]],
+            datasets: [{
+                label: '%',
+                data: [[${humidityList}]],
+                backgroundColor:
+                    'rgba(54, 162, 235, 0.2)',
+
+                borderColor:
+                    'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+    </script>
+
+</body>
+</html>
