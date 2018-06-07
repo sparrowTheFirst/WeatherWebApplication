@@ -1,10 +1,12 @@
 package demo.service.current;
 
 import demo.domain.current.CurrentWeather;
+import demo.service.DirectionStrategy;
 import demo.supplier.current.CurrentJsonObjectFromUrl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,180 +14,137 @@ import java.util.List;
 @Service
 public class CurrentWeatherInCityServiceImpl implements CurrentWeatherInCityService {
 
+    private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+    private final SimpleDateFormat timeOfTheDay = new SimpleDateFormat("dd-MM-yyyy, HH:mm");
+
     @Autowired
     private CurrentJsonObjectFromUrl jsonObject;
 
     @Override
-    public Double getTemperatureFromCityByNameOfCity(String nameOfCity) {
-        return jsonObject.getCurrentWeatherFromCityByNameOfCity(nameOfCity).getCurrentMain().getCurrentTemp();
+    public String getName(String nameOfCity) {
+        return jsonObject.getCurrentWeather(nameOfCity).getNameOfCity();
     }
 
     @Override
-    public Double getMaxTemperatureFromCityByNameOfCity(String nameOfCity) {
-        return jsonObject.getCurrentWeatherFromCityByNameOfCity(nameOfCity).getCurrentMain().getCurrentTempMax();
+    public Double getTemperature(String nameOfCity) {
+        return jsonObject.getCurrentWeather(nameOfCity).getCurrentMain().getCurrentTemp();
     }
 
     @Override
-    public Double getMinTemperatureFromCityByNameOfCity(String nameOfCity) {
-        return jsonObject.getCurrentWeatherFromCityByNameOfCity(nameOfCity).getCurrentMain().getCurrentTempMin();
+    public Double getPressure(String nameOfCity) {
+        return jsonObject.getCurrentWeather(nameOfCity).getCurrentMain().getCurrentPressure();
     }
 
     @Override
-    public Double getAmplitudeOfTemperatureFromCityByNameOfCity(String nameOfCity) {
-        double temp_max = jsonObject.getCurrentWeatherFromCityByNameOfCity(nameOfCity).getCurrentMain().getCurrentTempMax();
-        double temp_min = jsonObject.getCurrentWeatherFromCityByNameOfCity(nameOfCity).getCurrentMain().getCurrentTempMin();
-        return Math.abs(temp_max - temp_min);
+    public Double getSpeedOfWind(String nameOfCity) {
+        return jsonObject.getCurrentWeather(nameOfCity).getCurrentWind().getCurrentSpeed();
     }
 
     @Override
-    public Double getPressureFromCityByNameOfCity(String nameOfCity) {
-        return jsonObject.getCurrentWeatherFromCityByNameOfCity(nameOfCity).getCurrentMain().getCurrentPressure();
+    public String getCountry(String nameOfCity) {
+        return jsonObject.getCurrentWeather(nameOfCity).getCurrentSys().getCurrentCountry();
     }
 
     @Override
-    public Double getSpeedOfWindFromCityByNameOfCity(String nameOfCity) {
-        return jsonObject.getCurrentWeatherFromCityByNameOfCity(nameOfCity).getCurrentWind().getCurrentSpeed();
+    public String getDirectionOfWind(String nameOfCity) {
+        Double deg = jsonObject.getCurrentWeather(nameOfCity).getCurrentWind().getCurrentDeg();
+        return new DirectionStrategy(deg).toString();
     }
 
     @Override
-    public String getCountryOfCityByNameOfCity(String nameOfCity) {
-        return jsonObject.getCurrentWeatherFromCityByNameOfCity(nameOfCity).getCurrentSys().getCurrentCountry();
+    public String getDateOfMeasure(String nameOfCity) {
+        return timeOfTheDay.format(new Date(((jsonObject.getCurrentWeather(nameOfCity)).getDateOfCalculation()) * 1000));
     }
 
     @Override
-    public String getDirectionOfWindByNameOfCity(String nameOfCity) {
-        Double deg = jsonObject.getCurrentWeatherFromCityByNameOfCity(nameOfCity).getCurrentWind().getCurrentDeg();
-        if (deg>11.25&&deg<=33.75) {
-            return "NNE north-northeast";
-        }
-        if (deg>33.75&&deg<=56.25) {
-            return "NE northeast";
-        }
-        if (deg>56.25&&deg<=78.75) {
-            return "ENE east-northeast";
-        }
-        if (deg>78.75&&deg<=101.25) {
-            return "E east";
-        }
-        if (deg>101.25&&deg<=123.75) {
-            return "ESE east-southeast";
-        }
-        if (deg>123.75&&deg<=146.25) {
-            return "SE southeast";
-        }
-        if (deg>146.25&&deg<=168.75) {
-            return "SSE south-southeast";
-        }
-        if (deg>168.75&&deg<=191.25) {
-            return "S south";
-        }
-        if (deg>191.25&&deg<=213.75) {
-            return "SSW south-southwest";
-        }
-        if (deg>213.75&&deg<=236.25) {
-            return "SW southwest";
-        }
-        if (deg>236.25&&deg<=258.75) {
-            return "WSW west-southwest";
-        }
-        if (deg>258.75&&deg<=281.25) {
-            return "W west";
-        }
-        if (deg>281.25&&deg<=303.75) {
-            return "WNW west-northwest";
-        }
-        if (deg>303.75&&deg<=326.25) {
-            return "NW northwest";
-        }
-        if (deg>326.25&&deg<=348.75) {
-            return "NNW north-northwest";
-        } else {
-            return "N north";
-        }
+    public String getTimeOfSunrise(String nameOfCity) {
+        return timeFormat.format(new Date(((jsonObject.getCurrentWeather(nameOfCity)).getCurrentSys().getCurrentSunrise()) * 1000));
     }
 
     @Override
-    public String getTimeOfDataCalculationByNameOfCity(String nameOfCity) {
-        Date time=new Date(((jsonObject.getCurrentWeatherFromCityByNameOfCity(nameOfCity)).getDateOfCalculation())*1000);
-        return time.toString();
+    public String getTimeOfSunset(String nameOfCity) {
+        return timeFormat.format(new Date(((jsonObject.getCurrentWeather(nameOfCity)).getCurrentSys().getCurrentSunset()) * 1000));
     }
 
     @Override
-    public String getTimeOfSunriseByNameOfCity(String nameOfCity) {
-        Date timeOfSunrise=new Date(((jsonObject.getCurrentWeatherFromCityByNameOfCity(nameOfCity)).getCurrentSys().getCurrentSunrise())*1000);
-        return timeOfSunrise.toString();
-    }
+    public String getGeoLocation(String nameOfCity) {
+        double tmpLatDegrees = jsonObject.getCurrentWeather(nameOfCity).getCurrentCoord().getCurrentLat();
+        double tmpLonDegrees = jsonObject.getCurrentWeather(nameOfCity).getCurrentCoord().getCurrentLon();
+        int latDegrees = (int) tmpLatDegrees;
+        int lonDegrees = (int) tmpLonDegrees;
+        double tmpLatMinutes = (tmpLatDegrees - latDegrees) * 60;
+        double tmpLonMinutes = (tmpLonDegrees - lonDegrees) * 60;
+        int latMinutes = (int) tmpLatMinutes;
+        int lonMinutes = (int) tmpLonMinutes;
+        int latSeconds = (int) ((tmpLatMinutes - latMinutes) * 60);
+        int lonSeconds = (int) ((tmpLonMinutes - lonMinutes) * 60);
+        StringBuilder location = new StringBuilder();
 
-    @Override
-    public String getTimeOfSunsetByNameOfCity(String nameOfCity) {
-        Date timeOfSunset=new Date(((jsonObject.getCurrentWeatherFromCityByNameOfCity(nameOfCity)).getCurrentSys().getCurrentSunset())*1000);
-        return timeOfSunset.toString();
-    }
-
-    @Override
-    public int getBeaufortScaleByNameOfCity(String nameOfCity) {
-        double knot= jsonObject.getCurrentWeatherFromCityByNameOfCity(nameOfCity).getCurrentWind().getCurrentSpeed()/0.514;
-        int beaufortScale=(int) (knot+10)/6;
-        return beaufortScale;
-    }
-
-    @Override
-    public String getGeoLocationByNameOfCity(String nameOfCity) {
-        double tmpLatDegrees=jsonObject.getCurrentWeatherFromCityByNameOfCity(nameOfCity).getCurrentCoord().getCurrentLat();
-        double tmpLonDegrees=jsonObject.getCurrentWeatherFromCityByNameOfCity(nameOfCity).getCurrentCoord().getCurrentLon();
-        int latDegrees=(int) tmpLatDegrees;
-        int lonDegrees=(int) tmpLonDegrees;
-        double tmpLatMinutes=(tmpLatDegrees-latDegrees)*60;
-        double tmpLonMinutes=(tmpLonDegrees-lonDegrees)*60;
-        int latMinutes=(int) tmpLatMinutes;
-        int lonMinutes=(int) tmpLonMinutes;
-        int latSeconds=(int) ((tmpLatMinutes-latMinutes)*60);
-        int lonSeconds=(int) ((tmpLonMinutes-lonMinutes)*60);
-        String location="";
-        if(latDegrees<0&&lonDegrees<0){
-            location="S "+Integer.toString((latDegrees-(2*latDegrees)))+"* "+Integer.toString((latMinutes-(2*latMinutes)))+"' "+Integer.toString((latSeconds-(2*latSeconds)))+"'' "+"W "+Integer.toString((lonDegrees-(2*lonDegrees)))+"* "+Integer.toString((lonMinutes-(2*lonMinutes)))+"' "+Integer.toString((lonSeconds-(2*lonSeconds)))+"''";
+        if (latDegrees < 0 && lonDegrees < 0) {
+            location.append("S ")
+                    .append(Integer.toString((latDegrees - (2 * latDegrees)))).append("* ")
+                    .append(Integer.toString((latMinutes - (2 * latMinutes)))).append("' ")
+                    .append(Integer.toString((latSeconds - (2 * latSeconds)))).append("'' ")
+                    .append("W ")
+                    .append(Integer.toString((lonDegrees - (2 * lonDegrees)))).append("* ")
+                    .append(Integer.toString((lonMinutes - (2 * lonMinutes)))).append("' ")
+                    .append(Integer.toString((lonSeconds - (2 * lonSeconds)))).append("''");
         }
-        if(latDegrees>0&&lonDegrees>0){
-            location="N "+Integer.toString(latDegrees)+"* "+Integer.toString(latMinutes)+"' "+Integer.toString(latSeconds)+"'' "+"E "+Integer.toString(lonDegrees)+"* "+Integer.toString(lonMinutes)+"' "+Integer.toString(lonSeconds)+"''";
+        if (latDegrees > 0 && lonDegrees > 0) {
+            location.append("N ")
+                    .append(Integer.toString(latDegrees)).append("* ")
+                    .append(Integer.toString(latMinutes)).append("' ")
+                    .append(Integer.toString(latSeconds)).append("'' ")
+                    .append("E ")
+                    .append(Integer.toString(lonDegrees)).append("* ")
+                    .append(Integer.toString(lonMinutes)).append("' ")
+                    .append(Integer.toString(lonSeconds)).append("''");
         }
-        if(latDegrees<0&&lonDegrees>0){
-            location="S "+Integer.toString((latDegrees-(2*latDegrees)))+"* "+Integer.toString((latMinutes-(2*latMinutes)))+"' "+Integer.toString((latSeconds-(2*latSeconds)))+"'' "+"E "+Integer.toString(lonDegrees)+"* "+Integer.toString(lonMinutes)+"' "+Integer.toString(lonSeconds)+"''";
+        if (latDegrees < 0 && lonDegrees > 0) {
+            location.append("S ")
+                    .append(Integer.toString((latDegrees - (2 * latDegrees)))).append("* ")
+                    .append(Integer.toString((latMinutes - (2 * latMinutes)))).append("' ")
+                    .append(Integer.toString((latSeconds - (2 * latSeconds)))).append("'' ")
+                    .append("E ")
+                    .append(Integer.toString(lonDegrees)).append("* ")
+                    .append(Integer.toString(lonMinutes)).append("' ")
+                    .append(Integer.toString(lonSeconds)).append("''");
         }
-        if(latDegrees>0&&lonDegrees<0){
-            location="N "+Integer.toString(latDegrees)+"* "+Integer.toString(latMinutes)+"' "+Integer.toString(latSeconds)+"'' "+"W "+Integer.toString((lonDegrees-(2*lonDegrees)))+"* "+Integer.toString((lonMinutes-(2*lonMinutes)))+"' "+Integer.toString((lonSeconds-(2*lonSeconds)))+"''";
+        if (latDegrees > 0 && lonDegrees < 0) {
+            location.append("N ")
+                    .append(Integer.toString(latDegrees)).append("* ")
+                    .append(Integer.toString(latMinutes)).append("' ")
+                    .append(Integer.toString(latSeconds)).append("'' ")
+                    .append("W ")
+                    .append(Integer.toString((lonDegrees - (2 * lonDegrees)))).append("* ")
+                    .append(Integer.toString((lonMinutes - (2 * lonMinutes)))).append("' ")
+                    .append(Integer.toString((lonSeconds - (2 * lonSeconds)))).append("''");
         }
-        return location;
+        return String.valueOf(location);
     }
 
     @Override
-    public int getHumidityByNameOfCity(String nameOfCity) {
-        return jsonObject.getCurrentWeatherFromCityByNameOfCity(nameOfCity).getCurrentMain().getCurrentHumidity();
+    public int getHumidity(String nameOfCity) {
+        return jsonObject.getCurrentWeather(nameOfCity).getCurrentMain().getCurrentHumidity();
     }
 
     @Override
-    public Double getWindchillTempByNameOfCity(String nameOfCity) {
-        double temp = jsonObject.getCurrentWeatherFromCityByNameOfCity(nameOfCity).getCurrentMain().getCurrentTemp();
-        int hum = jsonObject.getCurrentWeatherFromCityByNameOfCity(nameOfCity).getCurrentMain().getCurrentHumidity();
-        double wind = jsonObject.getCurrentWeatherFromCityByNameOfCity(nameOfCity).getCurrentWind().getCurrentSpeed();
-        double windchill=(37-((37-temp)/(0.68-0.0014*hum+(1/(1.76+1.4*Math.pow(wind,0.75))))))-0.29*temp*(1-(hum/100));
-        windchill*=100;
-        windchill=Math.round(windchill);
-        windchill/=100;
-        return windchill;
+    public Double getWindchillTemp(String nameOfCity) {
+        double temp = jsonObject.getCurrentWeather(nameOfCity).getCurrentMain().getCurrentTemp();
+        int hum = jsonObject.getCurrentWeather(nameOfCity).getCurrentMain().getCurrentHumidity();
+        double wind = jsonObject.getCurrentWeather(nameOfCity).getCurrentWind().getCurrentSpeed();
+        double windchill = (37 - ((37 - temp) / (0.68 - 0.0014 * hum + (1 / (1.76 + 1.4 * Math.pow(wind, 0.75)))))) - 0.29 * temp * (1 - (hum / 100));
+        return Double.valueOf(Math.round(windchill * 10)/10d);
     }
 
     @Override
-    public List<String> getWeatherDescriptionsByNameOfCity(String nameOfCity) {
+    public List<String> getWeatherDescriptions(String nameOfCity) {
         List<String> result = new ArrayList<>();
-        for (CurrentWeather weather : jsonObject.getCurrentWeatherFromCityByNameOfCity(nameOfCity).getCurrentWeathers()) {
+        for (CurrentWeather weather : jsonObject.getCurrentWeather(nameOfCity).getCurrentWeathers()) {
             result.add(weather.getCurrentDescription());
         }
         return result;
     }
 
-    @Override
-    public String getNameOfCityByNameOfCity(String nameOfCity) {
-        return jsonObject.getCurrentWeatherFromCityByNameOfCity(nameOfCity).getNameOfCity();
-    }
 
 }

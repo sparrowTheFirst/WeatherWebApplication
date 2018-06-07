@@ -15,7 +15,7 @@ public class CurrentJsonObjectFromUrl {
     private String lang = "eng";
     private String url = "https://api.openweathermap.org/data/2.5/weather?q={nameOfCity}&APPID={apiKey}&units={units}&lang={lang}";
 
-    public CurrentWeatherInCity getCurrentWeatherFromCityByNameOfCity(String nameOfCity) {
+    public CurrentWeatherInCity getCurrentWeather(String nameOfCity) {
         RestTemplate restTemplate = new RestTemplate();
         Map<String, Object> uriVariables = new HashMap<>();
         uriVariables.put("nameOfCity", nameOfCity);

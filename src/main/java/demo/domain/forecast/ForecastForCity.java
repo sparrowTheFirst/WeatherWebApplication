@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ForecastForCity {
+public class
+ForecastForCity {
 
     @JsonProperty("city")
     private ForecastCity forecastCity;

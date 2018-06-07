@@ -7,9 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-@Data
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonClassDescription(value = "sys")
@@ -21,5 +20,4 @@ public class CurrentSys {
     private long currentSunrise;
     @JsonProperty("sunset")
     private long currentSunset;
-
 }

@@ -29,23 +29,19 @@ public class CurrentWeatherInCityController {
         if (bind.hasErrors()) {
             return "current/currentSearch";
         } else {
-            model.addAttribute("name", service.getNameOfCityByNameOfCity(weatherInCity.getNameOfCity()));
-            model.addAttribute("temp", service.getTemperatureFromCityByNameOfCity(weatherInCity.getNameOfCity()));
-            model.addAttribute("pressure", service.getPressureFromCityByNameOfCity(weatherInCity.getNameOfCity()));
-            model.addAttribute("humidity", service.getHumidityByNameOfCity(weatherInCity.getNameOfCity()));
-            model.addAttribute("amplitude", service.getAmplitudeOfTemperatureFromCityByNameOfCity(weatherInCity.getNameOfCity()));
-            model.addAttribute("speed", service.getSpeedOfWindFromCityByNameOfCity(weatherInCity.getNameOfCity()));
-            model.addAttribute("country", service.getCountryOfCityByNameOfCity(weatherInCity.getNameOfCity()));
-            model.addAttribute("direction", service.getDirectionOfWindByNameOfCity(weatherInCity.getNameOfCity()));
-            model.addAttribute("temp_max", service.getMaxTemperatureFromCityByNameOfCity(weatherInCity.getNameOfCity()));
-            model.addAttribute("temp_min", service.getMinTemperatureFromCityByNameOfCity(weatherInCity.getNameOfCity()));
-            model.addAttribute("date", service.getTimeOfDataCalculationByNameOfCity(weatherInCity.getNameOfCity()));
-            model.addAttribute("dateOfSunrise", service.getTimeOfSunriseByNameOfCity(weatherInCity.getNameOfCity()));
-            model.addAttribute("dateOfSunset", service.getTimeOfSunsetByNameOfCity(weatherInCity.getNameOfCity()));
-            model.addAttribute("beaufortScale", service.getBeaufortScaleByNameOfCity(weatherInCity.getNameOfCity()));
-            model.addAttribute("geoLocation", service.getGeoLocationByNameOfCity(weatherInCity.getNameOfCity()));
-            model.addAttribute("windchill", service.getWindchillTempByNameOfCity(weatherInCity.getNameOfCity()));
-            model.addAttribute("description", service.getWeatherDescriptionsByNameOfCity(weatherInCity.getNameOfCity()));
+            model.addAttribute("name", service.getName(weatherInCity.getNameOfCity()));
+            model.addAttribute("temp", service.getTemperature(weatherInCity.getNameOfCity()));
+            model.addAttribute("pressure", service.getPressure(weatherInCity.getNameOfCity()));
+            model.addAttribute("humidity", service.getHumidity(weatherInCity.getNameOfCity()));
+            model.addAttribute("speed", service.getSpeedOfWind(weatherInCity.getNameOfCity()));
+            model.addAttribute("country", service.getCountry(weatherInCity.getNameOfCity()));
+            model.addAttribute("direction", service.getDirectionOfWind(weatherInCity.getNameOfCity()));
+            model.addAttribute("date", service.getDateOfMeasure(weatherInCity.getNameOfCity()));
+            model.addAttribute("dateOfSunrise", service.getTimeOfSunrise(weatherInCity.getNameOfCity()));
+            model.addAttribute("dateOfSunset", service.getTimeOfSunset(weatherInCity.getNameOfCity()));
+            model.addAttribute("geoLocation", service.getGeoLocation(weatherInCity.getNameOfCity()));
+            model.addAttribute("windchill", service.getWindchillTemp(weatherInCity.getNameOfCity()));
+            model.addAttribute("description", service.getWeatherDescriptions(weatherInCity.getNameOfCity()));
         }
         return "current/currentHome";
     }

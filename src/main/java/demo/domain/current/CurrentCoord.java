@@ -7,9 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-@Data
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonClassDescription(value = "coord")
@@ -17,7 +16,7 @@ public class CurrentCoord {
 
     @JsonProperty("lat")
     private double currentLat;
+
     @JsonProperty("lon")
     private double currentLon;
-
 }

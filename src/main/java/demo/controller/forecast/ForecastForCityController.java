@@ -29,19 +29,16 @@ public class ForecastForCityController {
         if (bind.hasErrors()) {
             return "forecast/forecastSearch";
         } else {
-            model.addAttribute("name", service.getNameOfCity(city.getNameOfCity()));
-            model.addAttribute("country", service.getCountryOfCity(city.getNameOfCity()));
+            model.addAttribute("name", service.getName(city.getNameOfCity()));
+            model.addAttribute("country", service.getCountry(city.getNameOfCity()));
             model.addAttribute("geoLocation", service.getGeoLocation(city.getNameOfCity()));
-            model.addAttribute("date", service.getDateOfCalculation(city.getNameOfCity()));
+            model.addAttribute("date", service.getDateOfMeasuring(city.getNameOfCity()));
             model.addAttribute("tempList", service.getTemp(city.getNameOfCity()));
             model.addAttribute("windchillList", service.getWindchillTemp(city.getNameOfCity()));
-            model.addAttribute("dateOfCalcList", service.getDateOfCalculation(city.getNameOfCity()));
-            model.addAttribute("speedOfWindList", service.getSpeedOfWind(city.getNameOfCity()));
-            model.addAttribute("directOfWindList", service.getDirectionOfWind(city.getNameOfCity()));
+            model.addAttribute("dateOfCalcList", service.getDateOfMeasuring(city.getNameOfCity()));
             model.addAttribute("pressureList", service.getPressure(city.getNameOfCity()));
             model.addAttribute("humidityList", service.getHumidity(city.getNameOfCity()));
             model.addAttribute("description", service.getWeatherDescription(city.getNameOfCity()));
-            model.addAttribute("cnt", service.getNumberOfLinesOfJsonObject(city.getNameOfCity()));
         }
         return "forecast/forecastHome";
     }

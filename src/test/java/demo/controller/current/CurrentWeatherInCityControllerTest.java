@@ -1,6 +1,5 @@
 package demo.controller.current;
 
-import demo.controller.current.CurrentWeatherInCityController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

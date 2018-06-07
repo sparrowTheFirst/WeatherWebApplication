@@ -6,9 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-@Data
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class CurrentWeatherInCity {
@@ -27,5 +26,4 @@ public class CurrentWeatherInCity {
     private CurrentCoord currentCoord;
     @JsonProperty("weather")
     private CurrentWeather[] currentWeathers;
-
 }

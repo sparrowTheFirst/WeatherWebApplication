@@ -7,9 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-@Data
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonClassDescription(value = "Weather")
@@ -17,5 +16,4 @@ public class CurrentWeather {
 
     @JsonProperty("description")
     private String currentDescription;
-
 }
