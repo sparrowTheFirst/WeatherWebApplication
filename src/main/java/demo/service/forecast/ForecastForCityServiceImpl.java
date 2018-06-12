@@ -2,7 +2,7 @@ package demo.service.forecast;
 
 import demo.domain.forecast.ForecastParameters;
 import demo.domain.forecast.ForecastWeather;
-import demo.supplier.forecast.ForecastJsonObjectFromUrl;
+import demo.responce.forecast.ForecastJsonObjectFromUrl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

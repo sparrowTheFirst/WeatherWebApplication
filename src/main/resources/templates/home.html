@@ -16,5 +16,25 @@
         </div>
     </div>
 
+    <div class="result">
+        <div class="container row">
+            <div class="col-sm bg-light">
+                <form th:action="@{/add}" method="post">
+                    <input type="number" name="q"/>
+                    <button type="submit">Wyślij</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="result">
+        <div class="container row">
+            <div class="col-sm bg-light">
+                <ul th:each="city : ${cities}">
+                    <li th:text="${city}"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

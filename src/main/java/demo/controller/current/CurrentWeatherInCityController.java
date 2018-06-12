@@ -1,15 +1,18 @@
 package demo.controller.current;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import demo.domain.current.CurrentWeatherInCity;
+import demo.service.cities.CitiesService;
 import demo.service.current.CurrentWeatherInCityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 
 @Controller
 @RequestMapping("/current")
@@ -18,14 +21,18 @@ public class CurrentWeatherInCityController {
     @Autowired
     private CurrentWeatherInCityService service;
 
+    @Autowired
+    private CitiesService repository;
+
     @GetMapping("/search")
-    public String searchById(Model model) {
+    public String search(Model model) throws JsonProcessingException {
         model.addAttribute("weatherInCity", new CurrentWeatherInCity());
+        model.addAttribute("cities", repository.nameOfCities());
         return "current/currentSearch";
     }
 
     @PostMapping("/search")
-    public String searchById(Model model, @ModelAttribute CurrentWeatherInCity weatherInCity, BindingResult bind) {
+    public String search(Model model, @ModelAttribute CurrentWeatherInCity weatherInCity, BindingResult bind) {
         if (bind.hasErrors()) {
             return "current/currentSearch";
         } else {

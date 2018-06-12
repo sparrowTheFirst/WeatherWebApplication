@@ -1,7 +1,7 @@
 package demo.service.forecast;
 
 import demo.repositories.MockForecastWeatherInWarsaw;
-import demo.supplier.forecast.ForecastJsonObjectFromUrl;
+import demo.responce.forecast.ForecastJsonObjectFromUrl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

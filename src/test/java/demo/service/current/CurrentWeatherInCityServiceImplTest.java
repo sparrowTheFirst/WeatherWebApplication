@@ -1,7 +1,7 @@
 package demo.service.current;
 
 import demo.repositories.MockCurrentWeatherInWarsaw;
-import demo.supplier.current.CurrentJsonObjectFromUrl;
+import demo.responce.current.CurrentJsonObjectFromUrl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

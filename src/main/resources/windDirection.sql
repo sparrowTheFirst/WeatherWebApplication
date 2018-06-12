@@ -1,0 +1,16 @@
+insert into wind(id, direction, max_degree, min_degree) values(null, 'N north', 348.75, 11.25);
+insert into wind(id, direction, max_degree, min_degree) values(null, 'NNE north-northeast', 11.25, 33.75);
+insert into wind(id, direction, max_degree, min_degree) values(null, 'NE northeast', 33.75, 56.25);
+insert into wind(id, direction, max_degree, min_degree) values(null, 'ENE east-northeast', 56.25, 78.75);
+insert into wind(id, direction, max_degree, min_degree) values(null, 'E east', 78.75, 101.25);
+insert into wind(id, direction, max_degree, min_degree) values(null, 'ESE east-southeast', 101.25, 123.75);
+insert into wind(id, direction, max_degree, min_degree) values(null, 'SE southeast', 123.75, 146.25);
+insert into wind(id, direction, max_degree, min_degree) values(null, 'SSE south-southeast', 146.25, 168.75);
+insert into wind(id, direction, max_degree, min_degree) values(null, 'S south', 168.75, 191.25);
+insert into wind(id, direction, max_degree, min_degree) values(null, 'SSW south-southwest', 191.25, 213.75);
+insert into wind(id, direction, max_degree, min_degree) values(null, 'SW southwest', 213.75, 236.25);
+insert into wind(id, direction, max_degree, min_degree) values(null, 'WSW west-southwest', 236.25, 258.75);
+insert into wind(id, direction, max_degree, min_degree) values(null, 'W west', 258.75, 281.25);
+insert into wind(id, direction, max_degree, min_degree) values(null, 'WNW west-northwest', 281.25, 303.75);
+insert into wind(id, direction, max_degree, min_degree) values(null, 'NW northwest', 303.75, 326.25);
+insert into wind(id, direction, max_degree, min_degree) values(null, 'NNW north-northwest', 326.25, 348.75);

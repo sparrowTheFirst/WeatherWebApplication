@@ -1,8 +1,8 @@
 package demo.service.current;
 
 import demo.domain.current.CurrentWeather;
-import demo.service.DirectionStrategy;
-import demo.supplier.current.CurrentJsonObjectFromUrl;
+import demo.responce.current.CurrentJsonObjectFromUrl;
+import demo.service.wind.WindService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +19,9 @@ public class CurrentWeatherInCityServiceImpl implements CurrentWeatherInCityServ
 
     @Autowired
     private CurrentJsonObjectFromUrl jsonObject;
+
+    @Autowired
+    private WindService windService;
 
     @Override
     public String getName(String nameOfCity) {
@@ -48,7 +51,7 @@ public class CurrentWeatherInCityServiceImpl implements CurrentWeatherInCityServ
     @Override
     public String getDirectionOfWind(String nameOfCity) {
         Double deg = jsonObject.getCurrentWeather(nameOfCity).getCurrentWind().getCurrentDeg();
-        return new DirectionStrategy(deg).toString();
+        return windService.getDirection(deg);
     }
 
     @Override
